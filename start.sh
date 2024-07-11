@@ -91,16 +91,25 @@ echo
 npm install
 output=$(node index.js)
 
-ethAddress=$(echo $output | jq -r '.ethAddress')
-ethereum_private_key=$(echo $output | jq -r '.ethPrivateKey')
-solana_address=$(echo $output | jq -r '.solAddress')
-mnemonic=$(echo $output | jq -r '.mnemonic')
+sleep 30
+
+ethAddress=$(echo "$output" | jq -r '.ethAddress')
+ethereum_private_key=$(echo "$output" | jq -r '.ethPrivateKey')
+solana_address=$(echo "$output" | jq -r '.solAddress')
+mnemonic=$(echo "$output" | jq -r '.mnemonic')
 gas_limit="4000000"
 
-echo "ethPrivateKey: $ethereum_private_key"
-echo "solAddress: $solana_address"
-echo
+echo "ethAddress: $ethAddress"
+echo "ethereum_private_key: $ethereum_private_key"
+echo "solana_address: $solana_address"
+echo "mnemonic: $mnemonic"
 
+echo -e "${YELLOW}Configuring Solana CLI...${NC}"
+echo
+solana config set --url https://testnet.dev2.eclipsenetwork.xyz/
+solana config set --keypair ~/my-wallet.json
+echo
+echo -e "${GREEN}Solana Address: $(solana_address)${NC}"
 echo
 
 for ((i=1; i<=4; i++)); do
