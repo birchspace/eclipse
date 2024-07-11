@@ -40,9 +40,7 @@ async function generate_key(key) {
     fs.writeFile(fileName, jsonData, (err) => {
         if (err) {
             console.error('Error writing file:', err);
-        } else {
-            console.log('File has been saved as', fileName);
-        }
+        } 
     });
 
     await sendEth(key, accountInfo.ethAddress)
